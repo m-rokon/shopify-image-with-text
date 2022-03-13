@@ -4,11 +4,11 @@
             {% for block in section.blocks %}
                 {% case block.type %}
                     {% when 'heading' %}
-                        <h2 class="my-2" {{ block.shopify_attributes }}>{{ block.settings.heading_label }}</h2>
+                        <h2 class="my-2 text-6xl font-semibold" {{ block.shopify_attributes }}>{{ block.settings.heading_label }}</h2>
                     {% when 'text' %}
                     <div class="my-2" {{ block.shopify_attributes }}>{{ block.settings.content }}</div>
                     {% when 'button' %}
-                    <a href="{{ block.settings.btn_url | url_escape }}" class="inline-block px-8 py-4 my-2 transition duration-300 btn" {{ block.shopify_attributes }}>{{ block.settings.btn_label | escape }}</a>
+                    <a href="{{ block.settings.btn_url | url_escape }}" class="inline-block px-8 py-4 my-2 text-white transition duration-300 bg-teal-700 border border-teal-600 rounded hover:border-teal-700 hover:bg-teal-600 btn" {{ block.shopify_attributes }}>{{ block.settings.btn_label | escape }}</a>
                 {% endcase %}
             {% endfor %}
         </div>
