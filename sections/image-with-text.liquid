@@ -1,0 +1,119 @@
+<div class="container px-5 mx-auto my-10 image-with-text-section md:px-0">
+    <div class="flex gap-4 flex-col md:flex-row section-row col-order-{{ section.settings.col_order }} items-center justify-center">
+        <div class="w-full md:w-1/2 section-col-1">
+            {% for block in section.blocks %}
+                {% case block.type %}
+                    {% when 'heading' %}
+                        <h2 class="my-2" {{ block.shopify_attributes }}>{{ block.settings.heading_label }}</h2>
+                    {% when 'text' %}
+                    <div class="my-2" {{ block.shopify_attributes }}>{{ block.settings.content }}</div>
+                    {% when 'button' %}
+                    <a href="{{ block.settings.btn_url | url_escape }}" class="inline-block px-8 py-4 my-2 transition duration-300 btn" {{ block.shopify_attributes }}>{{ block.settings.btn_label | escape }}</a>
+                {% endcase %}
+            {% endfor %}
+        </div>
+        <div class="w-full md:w-1/2 section-col-2">
+            {% if section.settings.image_with_text %}
+                <img src="{{ section.settings.image_with_text | image_url: width: 1024 }}" alt="{{ section.settings.image_with_text.alt }}" width="{{ section.settings.image_with_text.width }}" height="{{ section.settings.image_with_text.height }}" loading="lazy" />
+                {% else %}
+                {{ 'lifestyle-2' | placeholder_svg_tag: 'w-full' }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    #shopify-section-{{ section.id }} .col-order-image-left .section-col-1{
+        order: 2;
+    }
+    #shopify-section-{{ section.id }} .col-order-image-left .section-col-2{
+        order: 1;
+    }
+</style>
+
+{% schema %}
+{
+    "name": {
+        "en": "Image With Text"
+    },
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image_with_text",
+            "label": "Choose image"
+        },
+        {
+            "type": "header",
+            "content": "Settings"
+        },
+        {
+            "type": "select",
+            "id": "col_order",
+            "label": "Column order",
+            "options": [
+                {
+                    "value": "image-left",
+                    "label": "Image Left"
+                },
+                {
+                    "value": "image-right",
+                    "label": "Image Right"
+                }
+            ],
+            "default": "image-right"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "heading",
+            "name": "Heading",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "heading_label",
+                    "label": "Heading",
+                    "default": "Heading 2"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "name": "Content",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "richtext",
+                    "id": "content",
+                    "label": "Content",
+                    "default": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim deleniti laudantium fugit quae voluptatum voluptas iure eum magnam aliquid consequatur quaerat facilis rerum maiores, dolore, assumenda in animi atque modi quas voluptate voluptates nesciunt totam porro. Amet dicta facilis ut!</p>"
+                }
+            ]
+        },
+        {
+            "type": "button",
+            "name": "Button",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "btn_label",
+                    "label": "Button label",
+                    "default": "Explore more"
+                },
+                {
+                    "type": "url",
+                    "id": "btn_url",
+                    "label": "URL",
+                    "default": "/"
+                }
+            ]
+        }
+    ],
+    "presets": [
+    {
+        "name": "Image with text"
+    }
+  ]
+}
+{% endschema %}
